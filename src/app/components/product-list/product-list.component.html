@@ -1,0 +1,13 @@
+<div
+  class="d-flex justify-content-center align-items-center gap-3 flex-wrap product-card"
+>
+  <div *ngFor="let product of products" class="card">
+    <div>
+      <img class="card-img" src="{{ product.images }}" alt="" />
+    </div>
+    <div class="card-body">
+      <p class="card-title fs-3 fw-bold">{{ product.title }}</p>
+      <p class="card-text">{{ product.description }}</p>
+    </div>
+  </div>
+</div>
