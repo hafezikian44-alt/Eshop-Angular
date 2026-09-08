@@ -1,0 +1,16 @@
+<div
+  class="card d-flex flex-row align-items-center justify-content-center gap-2 mt-4 p-4"
+>
+  <img src="{{ selectedProduct?.images }}" alt="" />
+  <div class="d-flex flex-column align-items-start gap-4">
+    <div>
+      <h2>{{ selectedProduct?.title }}</h2>
+      <p>Brand: {{ selectedProduct?.brand }}</p>
+    </div>
+    <p>{{ selectedProduct?.description }}</p>
+    <div class="btn-contaner">
+      <p class="mb-0">{{ selectedProduct?.price }}</p>
+      <button class="btn btn-success">Add To Curt</button>
+    </div>
+  </div>
+</div>

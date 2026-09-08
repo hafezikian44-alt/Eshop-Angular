@@ -1,13 +1,19 @@
-<div
-  class="d-flex justify-content-center align-items-center gap-3 flex-wrap product-card"
->
-  <div *ngFor="let product of products" class="card">
+<div class="product-card-contaner">
+  <div *ngFor="let product of products" class="card product-card">
     <div>
       <img class="card-img" src="{{ product.images }}" alt="" />
     </div>
     <div class="card-body">
       <p class="card-title fs-3 fw-bold">{{ product.title }}</p>
       <p class="card-text">{{ product.description }}</p>
+    </div>
+    <div class="m-3 d-flex justify-content-between align-items-center">
+      <button class="btn btn-success" (click)="onProductDetails(product.id)">
+        More Details
+      </button>
+      <p routerLink="/productDetails" class="fs-5 fw-bold mb-0">
+        {{ product.price }}
+      </p>
     </div>
   </div>
 </div>
