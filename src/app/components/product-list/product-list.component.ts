@@ -14,15 +14,19 @@ import { Router } from '@angular/router';
 export class ProductListComponent implements OnInit {
   private productService = inject(ProductService);
   products: IProductDto[] = [];
-  private roater = inject(Router);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe((response) => {
-      return (this.products = response.products);
+      if (response) {
+        this.products = response.products;
+      } else {
+        this.products = this.productService.getProductsFromDb();
+      }
     });
   }
 
   onProductDetails(id: number) {
-    this.roater.navigate([`products/`, id]);
+    this.router.navigate([`products/`, id]);
   }
 }
