@@ -1,1 +1,40 @@
-<p>sign-in works!</p>
+<div class="card p-4">
+  <h4 class="mx-auto py-1 fw-bold">Sign In</h4>
+  <a
+    class="link-info mx-auto pb-4"
+    style="cursor: pointer"
+    routerLink="/sign-up"
+    >Do not have account ? Sign up !</a
+  >
+  <form
+    (submit)="submitForm()"
+    class="d-flex flex-column gap-4 w-75 mx-auto pb-3"
+  >
+    <input
+      [(ngModel)]="username"
+      name="username"
+      class="form-control"
+      type="text"
+      placeholder="Username..."
+    />
+    <input
+      [(ngModel)]="email"
+      name="email"
+      class="form-control"
+      type="email"
+      placeholder="Email..."
+    />
+    <input
+      [(ngModel)]="password"
+      name="password"
+      class="form-control"
+      type="password"
+      placeholder="Password..."
+    />
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+  <p class="fs-5 fw-bold text-danger mx-auto">{{ errorMassage }}</p>
+</div>
+
+<h1>{{ situation }}</h1>
