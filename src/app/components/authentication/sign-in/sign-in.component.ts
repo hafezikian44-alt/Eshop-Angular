@@ -1,21 +1,23 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ɵEmptyOutletComponent } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, ɵEmptyOutletComponent],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })
 export class SignInComponent {
-  @Input('situation')
-  situation: string | undefined = 'sign-in';
-
+  authService = inject(AuthService);
   username: string = '';
-  email: string = '';
   password: string = '';
   errorMassage: string = '';
-  submitForm() {}
+
+  submitForm() {
+    this.authService.signIn(this.username, this.password);
+    this.errorMassage = this.authService.signInErrorMassage;
+  }
 }

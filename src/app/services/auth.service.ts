@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { IUserDto } from '../dtos/user.dto';
-
+import { BasketService } from './basket.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private basketService = inject(BasketService);
   localStorageUsers?: string | null;
   users: IUserDto[] = [];
   localStorageCurrenUser?: string | null;
@@ -22,6 +23,9 @@ export class AuthService {
     if (this.localStorageCurrenUser) {
       this.currenUser = JSON.parse(this.localStorageCurrenUser);
     }
+    this.chengeUserStatus();
+  }
+  chengeUserStatus() {
     if (this.currenUser) {
       this.isUserLoggedIn = true;
     } else {
@@ -85,12 +89,11 @@ export class AuthService {
     this.addUserToLocalStorage();
     this.currenUser = newUser;
     this.addCurrensUserToLocalStorage();
-    console.log(this.users);
-    console.log(this.currenUser);
+    this.chengeUserStatus();
 
     return this.currenUser;
   }
-  signIn(username: string, password: string, email: string) {
+  signIn(username: string, password: string) {
     let findedUser = this.users.find((user) => user.username === username);
     if (!findedUser) {
       this.signInErrorMassage = 'Username is not found !';
@@ -98,12 +101,11 @@ export class AuthService {
     } else if (findedUser.password !== password) {
       this.signInErrorMassage = 'Password is incorrect !';
       return;
-    } else if (findedUser.email !== email) {
-      this.signInErrorMassage = 'Email is not found !';
-      return;
     } else {
+      this.signInErrorMassage = '';
       this.currenUser = findedUser;
       this.addCurrensUserToLocalStorage();
+      this.chengeUserStatus();
     }
   }
 }

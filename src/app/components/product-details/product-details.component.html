@@ -10,7 +10,15 @@
     <p>{{ selectedProduct?.description }}</p>
     <div class="btn-contaner">
       <p class="mb-0">{{ selectedProduct?.price }}</p>
-      <button class="btn btn-success">Add To Curt</button>
+      @if (isUserLoggedIn) {
+        <button class="btn btn-success" (click)="onAddToBasket()">
+          Add To Curt
+        </button>
+      } @else {
+        <button routerLink="/sign-in" class="btn btn-info">
+          Register to Buy
+        </button>
+      }
     </div>
   </div>
 </div>

@@ -1,20 +1,25 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { IProductDto } from '../../dtos/products.dto';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product.service';
-import { IApiProductsDto } from '../../dtos/apiProducts.dto';
+import { AuthService } from '../../services/auth.service';
+import { BasketService } from '../../services/basket.service';
+
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent implements OnInit {
+  basketService = inject(BasketService);
+  authService = inject(AuthService);
   router = inject(ActivatedRoute);
   productService = inject(ProductService);
   products: IProductDto[] = [];
   selectedProduct?: IProductDto;
+  isUserLoggedIn = this.authService.isUserLoggedIn;
 
   ngOnInit(): void {
     const productId = Number(this.router.snapshot.paramMap.get('id'));
@@ -24,4 +29,5 @@ export class ProductDetailsComponent implements OnInit {
       console.log(this.selectedProduct);
     });
   }
+  onAddToBasket() {}
 }
