@@ -1,6 +1,7 @@
 import { IProductDto } from './products.dto';
 
-export interface ICurtDto {
+export interface IBascketDto {
+  id: string;
   userId: string;
-  userCurt: IProductDto[];
+  products: IProductDto[] | null;
 }

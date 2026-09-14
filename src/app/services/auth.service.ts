@@ -84,12 +84,12 @@ export class AuthService {
         email,
       };
     }
-
     this.users.push(newUser);
     this.addUserToLocalStorage();
     this.currenUser = newUser;
     this.addCurrensUserToLocalStorage();
     this.chengeUserStatus();
+    this.basketService.createBascket(id);
 
     return this.currenUser;
   }
@@ -106,6 +106,7 @@ export class AuthService {
       this.currenUser = findedUser;
       this.addCurrensUserToLocalStorage();
       this.chengeUserStatus();
+      this.basketService.createBascket(findedUser.id);
     }
   }
 }

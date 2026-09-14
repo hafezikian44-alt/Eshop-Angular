@@ -25,9 +25,15 @@ export class ProductDetailsComponent implements OnInit {
     const productId = Number(this.router.snapshot.paramMap.get('id'));
     this.productService.getProducts().subscribe((data) => {
       this.products = data.products;
+
       this.selectedProduct = this.products.find((p) => p.id === productId);
+
       console.log(this.selectedProduct);
     });
   }
-  onAddToBasket() {}
+  onAddToBasket() {
+    if (this.selectedProduct) {
+      this.basketService.addProductToBasket(this.selectedProduct);
+    }
+  }
 }
