@@ -1,5 +1,4 @@
-import { inject, Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
+import { Injectable } from '@angular/core';
 import { IBascketDto } from '../dtos/basket.dto';
 import { IProductDto } from '../dtos/products.dto';
 
@@ -9,22 +8,22 @@ import { IProductDto } from '../dtos/products.dto';
 export class BasketService {
   // authService = inject(AuthService);
   localStorageBasket: string | null = null;
-  baskets: IBascketDto[] | null = null;
+  baskets: IBascketDto[] = [];
   localStorageCurrentBasket: string | null = null;
-  currentBasket: IBascketDto | null = null;
+  currentBasket: IBascketDto = { userId: '', products: [] };
+  userId: string = '';
 
   constructor() {
-    this.localStorageBasket = localStorage.getItem('basckets');
+    this.localStorageBasket = localStorage.getItem('baskets');
     this.baskets = this.localStorageBasket
       ? JSON.parse(this.localStorageBasket)
-      : [];
+      : null;
 
     this.localStorageCurrentBasket = localStorage.getItem('currentBasket');
     this.currentBasket = this.localStorageCurrentBasket
       ? JSON.parse(this.localStorageCurrentBasket)
-      : [];
+      : { userId: '', products: [] };
   }
-
   addBascketToLocalStorage(basket: IBascketDto) {
     console.log('add basket to local storage');
 
@@ -35,43 +34,58 @@ export class BasketService {
       (b: IBascketDto) => b.userId === basket.userId,
     );
     if (findedBasket) {
-      this.currentBasket = findedBasket;
+      return;
     } else {
-      this.currentBasket = basket;
       this.baskets?.push(basket);
     }
-    localStorage.setItem('currentBasket', JSON.stringify(this.currentBasket));
+
     localStorage.setItem('baskets', JSON.stringify(this.baskets));
     console.log('basket is added to local storage');
   }
+  addCurrentBasketToLocalStorage() {
+    localStorage.setItem('currentBasket', JSON.stringify(this.currentBasket));
+  }
 
-  createBascket(userId: string): void {
+  createBascket(userId: string) {
     console.log('creat basket calling');
 
-    const bascket = {
-      id: crypto.randomUUID(),
+    const basket = {
       userId: userId,
-      products: null,
+      products: [],
     };
-    this.baskets?.push(bascket);
-    this.addBascketToLocalStorage(bascket);
+
+    this.addBascketToLocalStorage(basket);
+  }
+
+  getCurrentBasket(id: string) {
+    const findedBasket = this.baskets.find((b) => b.userId === id);
+    if (findedBasket) {
+      this.currentBasket = findedBasket;
+    } else {
+      this.currentBasket = {
+        userId: id,
+        products: [],
+      };
+    }
+    this.addCurrentBasketToLocalStorage();
   }
 
   addProductToBasket(product: IProductDto) {
-    console.log('addProductToBasket called');
-
-    if (this.currentBasket?.products === null) {
-      this.currentBasket.products = [];
-    }
-    let existingProduct = this.currentBasket?.products?.find(
-      (p) => p.id === product?.id,
+    const existingProduct = this.currentBasket.products.find(
+      (p: IProductDto) => p.id === product.id,
     );
-    if (existingProduct || !this.currentBasket?.products) {
+    if (existingProduct) {
       return;
-    } else {
-      this.currentBasket.products.push(product);
-      console.log('addProductToBasket finished');
-      console.log(this.currentBasket.products);
     }
+    // this.currentBasket.products.push(product);
+    console.log(this.currentBasket);
+    console.log(product);
+  }
+
+  removeProductFromBasket(product: IProductDto) {
+    this.currentBasket.products = this.currentBasket.products.filter(
+      (p) => p.id !== product.id,
+    );
+    this.addCurrentBasketToLocalStorage();
   }
 }

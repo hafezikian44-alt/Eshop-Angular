@@ -1,4 +1,23 @@
-<app-navbar></app-navbar>
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
+<main>
+  <video
+    class="background-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    aria-hidden="true"
+  >
+    <source
+      src="/vecteezy_green-dark-shapes-background_40517216.mp4"
+      type="video/mp4"
+    />
+  </video>
+  <div class="video-overlay"></div>
+
+  <div class="page-content">
+    <app-navbar></app-navbar>
+    <div class="container app-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</main>

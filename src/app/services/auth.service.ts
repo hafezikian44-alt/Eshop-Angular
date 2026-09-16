@@ -106,7 +106,7 @@ export class AuthService {
       this.currenUser = findedUser;
       this.addCurrensUserToLocalStorage();
       this.chengeUserStatus();
-      this.basketService.createBascket(findedUser.id);
+      this.basketService.getCurrentBasket(findedUser.id);
     }
   }
 }

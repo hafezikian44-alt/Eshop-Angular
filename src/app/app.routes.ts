@@ -3,10 +3,12 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { SignInComponent } from './components/authentication/sign-in/sign-in.component';
 import { SignUpComponent } from './components/authentication/sign-up/sign-up.component';
+import { BasketComponent } from './components/basket/basket.component';
 
 export const routes: Routes = [
   { path: 'products', component: ProductListComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'sign-in', component: SignInComponent },
+  { path: 'basket', component: BasketComponent },
 ];
